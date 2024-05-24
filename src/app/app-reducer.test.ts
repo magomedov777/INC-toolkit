@@ -1,20 +1,20 @@
-// import { appActions, appReducer } from './app-slice'
+import { AppInitialStateType, appActions, appReducer } from './app-slice'
 
-// let startState: InitialStateType
+let startState: AppInitialStateType
 
-// beforeEach(() => {
-//   startState = {
-//     error: null,
-//     status: 'idle',
-//     isInitialized: false,
-//   }
-// })
-// test('correct error message should be set', () => {
-//   const endState = appReducer(startState, appActions.setAppError({ error: 'some error' }))
-//   expect(endState.error).toBe('some error')
-// })
+beforeEach(() => {
+  startState = {
+    error: null,
+    status: 'idle',
+    isInitialized: false,
+  }
+})
+test('correct error message should be set', () => {
+  const endState = appReducer(startState, appActions.setAppError({ error: 'some error' }))
+  expect(endState.error).toBe('some error')
+})
 
-// test('correct status should be set', () => {
-//   const endState = appReducer(startState, appActions.setAppStatus({ status: 'loading' }))
-//   expect(endState.status).toBe('loading')
-// })
+test('correct status should be set', () => {
+  const endState = appReducer(startState, appActions.setAppStatus({ status: 'loading' }))
+  expect(endState.status).toBe('loading')
+})
