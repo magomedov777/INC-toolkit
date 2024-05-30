@@ -5,7 +5,7 @@ import { EditableSpan } from '../../../components/EditableSpan/EditableSpan'
 import { Task } from './Task/Task'
 import { TaskStatuses, TaskType } from '../../../api/todolists-api'
 import { FilterValuesType, TodolistDomainType } from '../todolists-slice'
-import { fetchTasksTC } from '../tasks-reducer'
+import { fetchTasksTC } from '../tasks-slice'
 import { useAppDispatch } from '../../../hooks/useAppDispatch'
 import { Button, IconButton } from '@mui/material'
 import { Delete } from '@mui/icons-material'
@@ -83,7 +83,7 @@ export const Todolist = React.memo(function ({ demo = false, ...props }: PropsTy
       </h3>
       <AddItemForm addItem={addTask} disabled={props.todolist.entityStatus === 'loading'} />
       <div>
-        {tasksForTodolist?.map((t) => (
+        {tasksForTodolist.map((t) => (
           <Task
             key={t.id}
             task={t}
