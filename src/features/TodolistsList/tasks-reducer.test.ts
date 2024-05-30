@@ -5,7 +5,7 @@ import {
   tasksReducer,
   TasksStateType,
   updateTaskAC,
-} from './tasks-reducer'
+} from './tasks-slice'
 
 import { TaskPriorities, TaskStatuses } from '../../api/todolists-api'
 import { todolistsActions } from './todolists-slice'
