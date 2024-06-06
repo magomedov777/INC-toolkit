@@ -2,9 +2,9 @@
 import { todolistsAPI, TodolistType } from '../../api/todolists-api'
 import { Dispatch } from 'redux'
 import { appActions, RequestStatusType } from '../../app/app-slice'
-import { handleServerNetworkError } from '../../utils/error-utils'
 import { AppThunk } from '../../app/store'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { handleServerNetworkError } from 'utils/handle-server-network-error'
 
 const slice = createSlice({
   name: 'todolists',

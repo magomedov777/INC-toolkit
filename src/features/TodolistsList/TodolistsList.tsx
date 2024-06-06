@@ -12,12 +12,12 @@ import {
   todolistsActions,
 } from './todolists-slice'
 import { TasksStateType, tasksThunks } from './tasks-slice'
-import { TaskStatuses } from '../../api/todolists-api'
 import { Grid, Paper } from '@mui/material'
 import { AddItemForm } from '../../components/AddItemForm/AddItemForm'
 import { Todolist } from './Todolist/Todolist'
 import { Navigate } from 'react-router-dom'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
+import { TaskStatuses } from 'utils/enums'
 
 type PropsType = {
   demo?: boolean

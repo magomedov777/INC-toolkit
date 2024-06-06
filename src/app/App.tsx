@@ -8,7 +8,6 @@ import { AppRootStateType } from './store'
 import { initializeAppTC, RequestStatusType } from './app-slice'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Login } from '../features/Login/Login'
-import { logoutTC } from '../features/Login/auth-slice'
 import {
   AppBar,
   Button,
@@ -20,6 +19,7 @@ import {
   Typography,
 } from '@mui/material'
 import { Menu } from '@mui/icons-material'
+import { authThunks } from 'features/Login/auth-slice'
 
 type PropsType = {
   demo?: boolean
@@ -36,7 +36,7 @@ function App({ demo = false }: PropsType) {
   }, [])
 
   const logoutHandler = useCallback(() => {
-    dispatch(logoutTC())
+    dispatch(authThunks.logout())
   }, [])
 
   if (!isInitialized) {
