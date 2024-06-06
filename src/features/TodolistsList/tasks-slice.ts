@@ -1,21 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-  AddTaskArgs,
-  TaskPriorities,
-  TaskStatuses,
-  TaskType,
-  todolistsAPI,
-  TodolistType,
-  UpdateTaskArgs,
-  UpdateTaskModelType,
-} from '../../api/todolists-api'
+import { todolistsAPI } from '../../api/todolists-api'
 import { Dispatch } from 'redux'
 import { AppDispatch, AppRootStateType, AppThunk } from '../../app/store'
-import { handleServerAppError, handleServerNetworkError } from '../../utils/error-utils'
 import { appActions } from 'app/app-slice'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { todolistsActions } from './todolists-slice'
 import { createAppAsyncThunk } from 'utils/create-app-async-thunk'
+import { handleServerNetworkError } from 'utils/handle-server-network-error'
+import { handleServerAppError } from 'utils/handle-server-app-error'
+import { ResultCode, TaskPriorities, TaskStatuses } from 'utils/enums'
+import { AddTaskArgs, TaskType, UpdateTaskArgs, UpdateTaskModelType } from 'api/task-types'
 
 const slice = createSlice({
   name: 'tasks',
@@ -102,7 +96,7 @@ const addTask = createAppAsyncThunk<{ task: TaskType }, AddTaskArgs>(
     try {
       dispatch(appActions.setAppStatus({ status: 'loading' }))
       const res = await todolistsAPI.createTask(arg)
-      if (res.data.resultCode === 0) {
+      if (res.data.resultCode === ResultCode.success) {
         const task = res.data.data.item
         dispatch(appActions.setAppStatus({ status: 'succeeded' }))
         return { task }
@@ -137,7 +131,7 @@ const updateTask = createAppAsyncThunk<UpdateTaskArgs, UpdateTaskArgs>(
         ...arg.domainModel,
       }
       const res = await todolistsAPI.updateTask(arg.todolistId, arg.taskId, apiModel)
-      if (res.data.resultCode === 0) {
+      if (res.data.resultCode === ResultCode.success) {
         return arg
       } else {
         handleServerAppError(res.data, dispatch)

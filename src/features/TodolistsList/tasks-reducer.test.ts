@@ -1,6 +1,6 @@
+import { TaskPriorities, TaskStatuses } from 'utils/enums'
 import { tasksReducer, TasksStateType, tasksThunks } from './tasks-slice'
 
-import { TaskPriorities, TaskStatuses } from '../../api/todolists-api'
 import { todolistsActions } from './todolists-slice'
 
 let startState: TasksStateType = {}
