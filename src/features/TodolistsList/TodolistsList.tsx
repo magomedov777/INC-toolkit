@@ -5,11 +5,10 @@ import { AppRootStateType } from '../../app/store'
 import {
   addTodolistTC,
   changeTodolistTitleTC,
-  fetchTodolistsTC,
   FilterValuesType,
-  removeTodolistTC,
   TodolistDomainType,
   todolistsActions,
+  todolistsThunks,
 } from './todolists-slice'
 import { TasksStateType, tasksThunks } from './tasks-slice'
 import { Grid, Paper } from '@mui/material'
@@ -36,7 +35,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
     if (demo || !isLoggedIn) {
       return
     }
-    dispatch(fetchTodolistsTC())
+    dispatch(todolistsThunks.fetchTodolists())
   }, [])
 
   const removeTask = useCallback((taskId: string, todolistId: string) => {
@@ -65,8 +64,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
   }, [])
 
   const removeTodolist = useCallback(function (id: string) {
-    const thunk = removeTodolistTC(id)
-    dispatch(thunk)
+    dispatch(todolistsThunks.removeTodolist(id))
   }, [])
 
   const changeTodolistTitle = useCallback(function (id: string, title: string) {
