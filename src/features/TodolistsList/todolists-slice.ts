@@ -50,6 +50,14 @@ const slice = createSlice({
         const index = state.findIndex((tl) => tl.id === action.payload.id)
         if (index !== -1) state[index].title = action.payload.title
       })
+    // .addCase(changeTodolistFilter.fulfilled, (state, action) => {
+    //   const index = state.findIndex((tl) => tl.id === action.payload.id)
+    //   if (index !== -1) state[index].filter = action.payload.filter
+    // })
+    // .addCase(changeTodolistEntityStatus.fulfilled, (state, action) => {
+    //   const index = state.findIndex((tl) => tl.id === action.payload.id)
+    //   if (index !== -1) state[index].entityStatus = action.payload.status
+    // })
   },
 })
 
@@ -121,6 +129,44 @@ const changeTodolistTitle = createAppAsyncThunk<
   }
 })
 
+export type ChangeTodolistFilterArgType = {
+  id: string
+  filter: FilterValuesType
+}
+
+const changeTodolistFilter = createAppAsyncThunk<
+  ChangeTodolistFilterArgType,
+  ChangeTodolistFilterArgType
+>(`${slice.name}/changeTodolistTitle`, async (arg, thunkAPI) => {
+  const { dispatch, rejectWithValue } = thunkAPI
+  try {
+    todolistsAPI.updateTodolist(arg.id, arg.filter)
+    return arg
+  } catch (e) {
+    handleServerNetworkError(e, dispatch)
+    return rejectWithValue(null)
+  }
+})
+
+export type ChangeTodolistEntityStatusArgType = {
+  id: string
+  status: RequestStatusType
+}
+
+const changeTodolistEntityStatus = createAppAsyncThunk<
+  ChangeTodolistEntityStatusArgType,
+  ChangeTodolistEntityStatusArgType
+>(`${slice.name}/changeTodolistTitle`, async (arg, thunkAPI) => {
+  const { dispatch, rejectWithValue } = thunkAPI
+  try {
+    todolistsAPI.updateTodolist(arg.id, arg.status)
+    return arg
+  } catch (e) {
+    handleServerNetworkError(e, dispatch)
+    return rejectWithValue(null)
+  }
+})
+
 export type FilterValuesType = 'all' | 'active' | 'completed'
 export type TodolistDomainType = TodolistType & {
   filter: FilterValuesType
@@ -129,4 +175,11 @@ export type TodolistDomainType = TodolistType & {
 
 export const todolistsReducer = slice.reducer
 export const todolistsActions = slice.actions
-export const todolistsThunks = { fetchTodolists, removeTodolist, addTodolist, changeTodolistTitle }
+export const todolistsThunks = {
+  fetchTodolists,
+  removeTodolist,
+  addTodolist,
+  changeTodolistTitle,
+  changeTodolistFilter,
+  changeTodolistEntityStatus,
+}
